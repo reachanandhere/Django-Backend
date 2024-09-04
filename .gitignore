@@ -1,1 +1,4 @@
 env
+
+/cados_api/base/migrations/
+/cados_api/base/__pycache__/**
