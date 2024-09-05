@@ -34,7 +34,7 @@ def advocates(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def advocate_detail(request, username):
-    advocate = Advocate.objects.get(username=username)
+    advocate = Advocate.objects.get(Q(username=username))
 
     if request.method == 'GET':
         serializer = AdvocateSerializer(advocate, many=False)
@@ -50,4 +50,4 @@ def advocate_detail(request, username):
 
     if request.method == 'DELETE':
         advocate.delete()
-        return redirect('/advocates')
+        return Response('user was deleted')

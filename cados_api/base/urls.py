@@ -4,6 +4,6 @@ from .views import endpoints, advocates, advocate_detail
 
 urlpatterns = [
     path('', endpoints),
-    path('advocates/', advocates),
+    path('advocates/', advocates, name='advocates'),
     path('advocates/<str:username>/', advocate_detail),
 ]
