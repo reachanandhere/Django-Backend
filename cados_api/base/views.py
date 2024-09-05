@@ -4,9 +4,9 @@ from rest_framework.response import Response
 from django.db.models import Q
 from rest_framework.views import APIView
 
-from .models import Advocate
+from .models import Advocate, Company
 
-from .serializers import AdvocateSerializer
+from .serializers import AdvocateSerializer, CompanySerializer  
 
 @api_view(['GET'])
 def endpoints(request):
@@ -72,3 +72,9 @@ class Advocate_detail(APIView):
         advocate = Advocate.objects.get(Q(username=username))
         advocate.delete()
         return Response('user was deleted')
+    
+@api_view(['GET'])
+def companies_list(request):
+    companies = Company.objects.all()
+    serializer = CompanySerializer(companies, many=True)
+    return Response(serializer.data)

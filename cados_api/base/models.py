@@ -12,6 +12,7 @@ class Company(models.Model):
 class Advocate(models.Model):
     username = models.CharField(max_length=100)
     bio = models.TextField(max_length=500, null=True, blank=True)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, null=True, blank=True)
     # email = models.EmailField()
     # phone = models.CharField(max_length=15)
     # address = models.TextField()
