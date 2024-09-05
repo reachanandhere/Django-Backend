@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.db.models import Q
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Advocate, Company
 
@@ -14,6 +15,7 @@ def endpoints(request):
     return Response(data)
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def advocates(request):
 
     if request.method == 'GET':
