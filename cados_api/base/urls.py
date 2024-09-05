@@ -1,9 +1,9 @@
 from django.urls import path
 
-from .views import endpoints, advocates, advocate_detail
+from . import views
 
 urlpatterns = [
-    path('', endpoints),
-    path('advocates/', advocates, name='advocates'),
-    path('advocates/<str:username>/', advocate_detail),
+    path('', views.endpoints),
+    path('advocates/', views.advocates, name='advocates'),
+    path('advocates/<str:username>/', views.Advocate_detail.as_view(), name='advocate_detail')
 ]

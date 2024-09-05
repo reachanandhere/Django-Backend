@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.db.models import Q
+from rest_framework.views import APIView
 
 from .models import Advocate
 
@@ -32,22 +33,42 @@ def advocates(request):
         serializer = AdvocateSerializer(advocate, many=False)
         return Response(serializer.data)
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def advocate_detail(request, username):
-    advocate = Advocate.objects.get(Q(username=username))
+# @api_view(['GET', 'PUT', 'DELETE'])
+# def advocate_detail(request, username):
+#     advocate = Advocate.objects.get(Q(username=username))
 
-    if request.method == 'GET':
+#     if request.method == 'GET':
+#         serializer = AdvocateSerializer(advocate, many=False)
+#         return Response(serializer.data)
+    
+#     if request.method == 'PUT':
+#         data = request.data  
+#         advocate.username = data['username']
+#         advocate.bio = data['bio']
+#         advocate.save()
+#         serializer = AdvocateSerializer(advocate, many=False)
+#         return Response(serializer.data)
+
+#     if request.method == 'DELETE':
+#         advocate.delete()
+#         return Response('user was deleted')
+
+class Advocate_detail(APIView):
+    def get(self, request, username):
+        advocate = Advocate.objects.get(Q(username__icontains=username))
         serializer = AdvocateSerializer(advocate, many=False)
         return Response(serializer.data)
-    
-    if request.method == 'PUT':
-        data = request.data  
+
+    def put(self, request, username):
+        data = request.data
+        advocate = Advocate.objects.get(Q(username=username))
         advocate.username = data['username']
         advocate.bio = data['bio']
         advocate.save()
         serializer = AdvocateSerializer(advocate, many=False)
         return Response(serializer.data)
 
-    if request.method == 'DELETE':
+    def delete(self, request, username):
+        advocate = Advocate.objects.get(Q(username=username))
         advocate.delete()
         return Response('user was deleted')
